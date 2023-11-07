@@ -17,14 +17,14 @@ public class FlightService {
         flightRepository.save(flight);
     }
 
-//    public void deleteFlight(long id){
-//        Flight flight = flightRepository.findById(id).get();
-//        for (Passenger passenger : passenger.getPassengers()){
-//            passenger.removeFlight(flight);
-//        }
-//        flightRepository.deleteById(id);
-//
-//    }
+    public void deleteFlight(long id){
+        Flight flight = flightRepository.findById(id).get();
+        for (Passenger passenger : flight.getPassengers()){
+            passenger.removeFlight(flight);
+        }
+        flightRepository.deleteById(id);
+
+    }
 
     public List<Flight> findAllFlights(){
         return flightRepository.findAll();
