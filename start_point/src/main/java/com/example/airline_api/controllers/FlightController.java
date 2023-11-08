@@ -1,7 +1,9 @@
 package com.example.airline_api.controllers;
 
+import com.example.airline_api.models.BookingDTO;
 import com.example.airline_api.models.Flight;
 import com.example.airline_api.models.Passenger;
+import com.example.airline_api.models.PassengerDTO;
 import com.example.airline_api.repositories.FlightRepository;
 import com.example.airline_api.services.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,20 +43,24 @@ public class FlightController {
     }
 
 //     Book passenger on a flight
-//    @PatchMapping(value = "/{id}")
-//    public ResponseEntity<Flight> addPassengerToFlight(
-//            @RequestBody Passenger passenger,
-//            @PathVariable long id)
-//    {
-//        Flight flight = flightService.
-//        return null;
-//    }
+    @PatchMapping(value = "/{id}")
+    public ResponseEntity<Flight> addPassengerToFlight(
+            @RequestBody BookingDTO bookingDTO,
+            @PathVariable long id)
+    {
+        Flight flight = flightService.bookPassengerOntoFlight(id, bookingDTO);
+        if (flight != null) {
+            return new ResponseEntity<>(flight, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
-    // Cancel flight
-//    @DeleteMapping(value = "/{id}")
-//    public ResponseEntity<Long> cancelFlight(@PathVariable long id){
-//        flightService.deleteFlight(id);
-//        return new ResponseEntity<>(id, HttpStatus.OK);
-//    }
+//     Cancel flight
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Long> cancelFlight(@PathVariable long id){
+        flightService.cancelFlight(id);
+        return new ResponseEntity<>(id, HttpStatus.OK);
+    }
 
 }
