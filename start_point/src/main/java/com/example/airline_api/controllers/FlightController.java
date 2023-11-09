@@ -2,13 +2,10 @@ package com.example.airline_api.controllers;
 
 import com.example.airline_api.models.BookingDTO;
 import com.example.airline_api.models.Flight;
-import com.example.airline_api.models.Passenger;
-import com.example.airline_api.models.PassengerDTO;
 import com.example.airline_api.repositories.FlightRepository;
 import com.example.airline_api.services.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,6 +58,15 @@ public class FlightController {
     public ResponseEntity<Long> cancelFlight(@PathVariable long id){
         flightService.cancelFlight(id);
         return new ResponseEntity<>(id, HttpStatus.OK);
+    }
+
+    //filter flight by destination
+
+    @GetMapping(value = "/filter")
+    public ResponseEntity<Flight> getFlightByDestination(
+            @RequestParam(name = "destination") String destination){
+        List<Flight> filteredFlights = flightService.filterFlightsByDestination(destination);
+        return new ResponseEntity(filteredFlights,HttpStatus.OK);
     }
 
 }

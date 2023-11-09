@@ -53,6 +53,11 @@ public class FlightService {
         return flight;
     }
 
+    public List<Flight> filterFlightsByDestination(String destination) {
+        // Implement the logic to filter flights by destination
+        return flightRepository.findByDestination(destination);
+    }
+
 
     }
 
